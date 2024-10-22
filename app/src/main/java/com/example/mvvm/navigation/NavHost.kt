@@ -8,7 +8,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.mvvm.ui.about.About
+import com.example.mvvm.ui.account.Account
+import com.example.mvvm.ui.help.Help
 import com.example.mvvm.ui.home.Home
+import com.example.mvvm.ui.products.InsertProductsScreen
+import com.example.mvvm.ui.products.ViewProductsScreen
+import com.example.mvvm.ui.services.Services
 import com.example.mvvm.ui.shop.Shop
 
 
@@ -30,10 +35,6 @@ fun AppNavHost(
 
         }
 
-
-
-
-
       composable(ROUTE_HOME){
 
           Home(navController)
@@ -53,6 +54,37 @@ fun AppNavHost(
             Shop(navController)
 
         }
+
+        composable(ROUTE_SERVICES){
+
+            Services(navController)
+
+        }
+
+
+        composable(ROUTE_ACCOUNT){
+
+            Account(navController)
+
+        }
+
+
+        composable(ROUTE_HELP){
+
+            Help(navController)
+        }
+
+
+        composable(ROUTE_INSERT){
+
+            InsertProductsScreen(navController)
+        }
+
+        composable(ROUTE_VIEWPRODUCTS){
+
+            ViewProductsScreen(navController)
+        }
+
 
 
 
