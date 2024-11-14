@@ -51,11 +51,12 @@ android {
 }
 
 dependencies {
-    
-   
+
     implementation(libs.androidx.navigation.compose)
 
     implementation(libs.coil.compose)
+
+//    implementation("androidx.compose.material:material:1.7.5")
 
     
     implementation(libs.androidx.core.ktx)

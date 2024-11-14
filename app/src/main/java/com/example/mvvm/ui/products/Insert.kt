@@ -6,6 +6,8 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,10 +16,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,6 +33,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -40,6 +48,7 @@ import com.google.firebase.storage.StorageReference
 @Composable
 fun InsertProductsScreen(navController: NavController) {
     var productName by remember { mutableStateOf("") }
+    var author by remember { mutableStateOf("") }
     var productPrice by remember { mutableStateOf("") }
     var productDescription by remember { mutableStateOf("") }
     var productImageUri by remember { mutableStateOf<Uri?>(null) }
@@ -57,18 +66,56 @@ fun InsertProductsScreen(navController: NavController) {
 
     Column(
         modifier = Modifier
+            .background(color = Color(0xFF9F2B68), shape = RoundedCornerShape(35.dp))
             .fillMaxSize()
+            .padding(top = 50.dp)
             .padding(16.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Insert Product", fontSize = 24.sp, color = Color.Black)
+        Text("Insert Product", fontSize = 24.sp, color = Color.White)
 
         OutlinedTextField(
             value = productName,
             onValueChange = { productName = it },
-            label = { Text("Product Name") },
-            modifier = Modifier.fillMaxWidth()
+            label = { Text("Book Name",
+                color = Color(0xFFF8C8DC)
+            ) },
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = Color(0xFF9F2B68),
+                unfocusedContainerColor = Color(0xFF9F2B68),
+                focusedIndicatorColor = Color(0xFFF8C8DC),
+                unfocusedIndicatorColor = Color.White,
+                unfocusedTextColor = Color(0xFFF8C8DC),
+                focusedTextColor = Color.White
+
+
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+        )
+
+        OutlinedTextField(
+            value = author,
+            onValueChange = { author = it },
+            label = { Text("Author",
+                    color = Color(0xFFF8C8DC)
+            ) },
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = Color(0xFF9F2B68),
+                unfocusedContainerColor = Color(0xFF9F2B68),
+                focusedIndicatorColor = Color(0xFFF8C8DC),
+                unfocusedIndicatorColor = Color.White,
+                unfocusedTextColor = Color(0xFFF8C8DC),
+                focusedTextColor = Color.White
+
+
+            ),
+
+            modifier = Modifier
+                .fillMaxWidth()
+
+//
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -76,8 +123,22 @@ fun InsertProductsScreen(navController: NavController) {
         OutlinedTextField(
             value = productPrice,
             onValueChange = { productPrice = it },
-            label = { Text("Product Price") },
-            modifier = Modifier.fillMaxWidth(),
+            label = { Text("Book Price",
+                color = Color(0xFFF8C8DC)
+                ) },
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = Color(0xFF9F2B68),
+                unfocusedContainerColor = Color(0xFF9F2B68),
+                focusedIndicatorColor = Color(0xFFF8C8DC),
+                unfocusedIndicatorColor = Color.White,
+                unfocusedTextColor = Color(0xFFF8C8DC),
+                focusedTextColor = Color.White
+
+
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -85,21 +146,55 @@ fun InsertProductsScreen(navController: NavController) {
         OutlinedTextField(
             value = productDescription,
             onValueChange = { productDescription = it },
-            label = { Text("Product Description") },
-            modifier = Modifier.fillMaxWidth()
-        )
+            label = { Text("Book  Description",
+                color = Color(0xFFF8C8DC)
+                ) },
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = Color(0xFF9F2B68),
+                unfocusedContainerColor = Color(0xFF9F2B68),
+                focusedIndicatorColor = Color(0xFFF8C8DC),
+                unfocusedIndicatorColor = Color.White,
+                unfocusedTextColor = Color(0xFFF8C8DC),
+                focusedTextColor = Color.White
 
-        Spacer(modifier = Modifier.height(8.dp))
 
-        Button(onClick = { imagePickerLauncher.launch("image/*") }) {
-            Text("Select Product Image")
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(150.dp)
+
+            )
+
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+        Button(onClick = { imagePickerLauncher.launch("image/*") },
+            modifier = Modifier
+                .width(250.dp),
+
+            shape = RoundedCornerShape(10.dp),
+            elevation = ButtonDefaults.buttonElevation(
+                defaultElevation = 10.dp,
+                pressedElevation = 6.dp
+
+            ),
+            colors = ButtonDefaults.buttonColors(
+                containerColor =Color.White,
+                contentColor = Color(0xFF9F2B68),
+            ),
+
+        ) {
+            Text("Select Book Image",
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp,
+            )
         }
 
         productImageUri?.let {
             Spacer(modifier = Modifier.height(8.dp))
             Image(
                 painter = rememberImagePainter(it),
-                contentDescription = "Selected Product Image",
+                contentDescription = "Selected Book Image",
                 modifier = Modifier
                     .size(150.dp)
                     .padding(8.dp)
@@ -110,10 +205,10 @@ fun InsertProductsScreen(navController: NavController) {
 
         Button(
             onClick = {
-                if (productName.isNotEmpty() && productPrice.isNotEmpty() && productDescription.isNotEmpty() && productImageUri != null) {
+                if (productName.isNotEmpty() &&author.isNotEmpty() && productPrice.isNotEmpty() && productDescription.isNotEmpty() && productImageUri != null) {
                     uploading = true
                     uploadProduct(
-                        productName, productPrice, productDescription,
+                        productName, author, productPrice, productDescription,
                         productImageUri!!, storage, firestore, context, navController
                     ) { success ->
                         uploading = false
@@ -134,12 +229,25 @@ fun InsertProductsScreen(navController: NavController) {
                 }
             },
             enabled = !uploading,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(10.dp),
+            elevation = ButtonDefaults.buttonElevation(
+                defaultElevation = 10.dp,
+                pressedElevation = 6.dp
+
+            ),
+            colors = ButtonDefaults.buttonColors(
+                containerColor =Color.White ,
+                contentColor = Color(0xFF9F2B68),
+            ),
         ) {
             if (uploading) {
                 CircularProgressIndicator(color = Color.White)
             } else {
-                Text("Save Product")
+                Text("Upload Book",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp,
+                )
             }
         }
     }
@@ -147,6 +255,7 @@ fun InsertProductsScreen(navController: NavController) {
 
 fun uploadProduct(
     name: String,
+    author: String,
     price: String,
     description: String,
     imageUri: Uri,
@@ -171,6 +280,7 @@ fun uploadProduct(
             val downloadUri = task.result
             val product = hashMapOf(
                 "name" to name,
+                "author" to author,
                 "price" to price,
                 "description" to description,
                 "image" to downloadUri.toString()
